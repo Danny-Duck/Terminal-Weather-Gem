@@ -23,7 +23,7 @@ end
 
 def location_prom
   a = Prompt.select('Show me the forecast of ', { 'my current location!' => 1, 'somewhere else:' => 2 })
-  a == 1 ? Weather_data.data('current') : Weather_data.data(other_prom)
+  a == 1 ? WData.weather_array('current') : WData.weather_array(other_prom)
 end
 
 def other_prom
@@ -44,8 +44,8 @@ def again_prom
 end
 
 def interface
-  weather_data = location_prom
-  length_prom(weather_data)
+  weather_array = location_prom
+  length_prom(weather_array)
   again_prom
 end
 
