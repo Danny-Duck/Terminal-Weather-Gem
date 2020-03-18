@@ -8,25 +8,12 @@ class Weather_data
     @summary = summary
   end
 
-  def self.get_ip
-    begin 
-      URI('http://whatismyip.akamai.com').open.read
-    rescue
-      puts "help me"
-    end
-  end
-
-  def self.coord(location)
-    location == 'current'
-    Geocoder.search(location).first.coordinates
-  end
-
   def self.data(location)
     week = []
-    coord = coord(location)
-    weather_call = URI("https://api.darksky.net/forecast/b90bba0f6d3f8c2e3102c9b691f4803d/#{coord[0]},#{coord[1]}?exclude=currently,alerts,flags,hourly,minutely").open.read
+    coord = Geocoder.search(location).first.coordinates
+    api_call = URI("https://api.darksky.net/forecast/b90bba0f6d3f8c2e3102c9b691f4803d/#{coord[0]},#{coord[1]}?exclude=currently,alerts,flags,hourly,minutely").open.read
 
-    File.write('weekly_weather_data.json', weather_call)
+    File.write('weekly_weather_data.json', api_call)
 
     weat_data = JSON.parse(File.read('./weekly_weather_data.json'))
 

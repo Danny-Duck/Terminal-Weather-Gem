@@ -13,16 +13,17 @@ require 'tty-spinner'
 require 'tty-box'
 
 Prompt = TTY::Prompt.new
-Box =
+Box = nil
 
-  puts 'Welcome to the Weather App'
+puts 'Welcome to the Weather App'
 
 def day_creation(date, summary, temp)
   TTY::Box.frame date, summary, temp, padding: 1, align: :center
 end
 
-def local_prom
-  Prompt.select('Show me the forecast of ', { 'my current location!' => 1, 'somewhere else:' => 2 }, default: 1)
+def location_prom
+  a = Prompt.select('Show me the forecast of ', { 'my current location!' => 1, 'somewhere else:' => 2 })
+  a == 1 ? Weather_data.data('current') : Weather_data.data(other_prom)
 end
 
 def other_prom
@@ -30,8 +31,12 @@ def other_prom
   gets.chomp
 end
 
-def time_prom
-  Prompt.select('and I it want for', { 'today' => 1, 'the week' => 2 })
+def length_prom(weather_data)
+  a = Prompt.select('and I it want for', { 'today' => 1, 'the week' => 2 })
+  weather_data.each do |i|
+    print day_creation(i.time, i.summary, i.temp)
+    a == 1 ? break : next
+  end
 end
 
 def again_prom
@@ -39,20 +44,8 @@ def again_prom
 end
 
 def interface
-  print Box
-  week = []
-  week = if local_prom == 1
-           Weather_data.data('current')
-         else
-           Weather_data.data(other_prom)
-           end
-  if time_prom == 1
-    print day_creation(week[0].time, week[0].summary, week[0].temp)
-  else
-    week.each do |i|
-      print day_creation(i.time, i.summary, i.temp)
-    end
-  end
+  weather_data = location_prom
+  length_prom(weather_data)
   again_prom
 end
 
