@@ -6,13 +6,12 @@ require_relative 'config.rb'
 Prompt = TTY::Prompt.new
 Box = nil
 
-puts 'Welcome to the Weather App'
-
 def day_creation(date, summary, temp)
   TTY::Box.frame date, summary, temp, padding: 1, align: :center
 end
 
 def location_prom
+  system 'clear'
   a = Prompt.select('Show me the forecast of ', { 'my current location!' => 1, 'somewhere else:' => 2 })
   a == 1 ? WData.weather_array('current') : WData.weather_array(other_prom)
 end
@@ -30,16 +29,23 @@ def length_prom(weather_data)
   end
 end
 
-def again_prom
-  interface if Prompt.yes?('Try another location?') == true
+def additional_info
+  case Prompt.select('and?', { 'New location?' => 1, 'Additional info' => 2 })
+  when 1
+    interface
+  when 2
+    puts 'Additional info'
+  else
+    puts 'help error'
+  end
 end
 
 def interface
   weather_array = location_prom
   length_prom(weather_array)
-  again_prom
+  additional_info
 end
 
-system 'clear'
+puts 'Welcome to the Weather App'
 interface
 puts 'thank you bye bye'

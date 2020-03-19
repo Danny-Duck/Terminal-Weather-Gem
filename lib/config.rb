@@ -12,11 +12,16 @@ require 'tty-prompt'
 require 'tty-spinner'
 require 'tty-box'
 
-# settings 
+# preferences
+  # Geocoder.configure(:timeout => 1)
+# state tracking
 
-class settings
-  def internet_connect
-    if 
-    end
-  end
-end
+# class State
+#   def self.internet_connection
+#   end
+#   def data_cond
+#   relevant_data = File.file?('./weather_data.json') and 
+#   if internet_connection == true and relevant_data
+#   end
+# end
+
