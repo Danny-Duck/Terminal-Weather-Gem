@@ -17,11 +17,8 @@ class WData
   end
 
   def self.data_update(location)
-    if location == "current" 
-      location = get_ip()
-    end
+    location == "current" ? location = get_ip() : nil
     coord = Geocoder.search(location).first.coordinates
-    p coord
     api_call = URI("https://api.darksky.net/forecast/b90bba0f6d3f8c2e3102c9b691f4803d/#{coord[0]},#{coord[1]}?exclude=currently,alerts,flags,hourly,minutely").open.read
     File.write('weekly_weather_data.json', api_call)
   end

@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'model.rb'
-require 'open-uri'
-require 'json'
-require 'ipaddr'
-require 'geocoder'
-require 'csv'
-require 'time'
-require 'date'
-require 'tty-prompt'
-require 'tty-spinner'
-require 'tty-box'
+require_relative 'config.rb'
 
 Prompt = TTY::Prompt.new
 Box = nil
