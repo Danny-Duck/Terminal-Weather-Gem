@@ -6,4 +6,4 @@
 /pkg/
 /spec/reports/
 /tmp/
-/lib/weekly_weather_data.json
+/lib/weather_data.json
